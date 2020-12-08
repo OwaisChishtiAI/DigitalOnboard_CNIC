@@ -1,14 +1,14 @@
-from Test.Cnic_reality import check_reality
+from test import CheckReality
 from flask import Flask, Response, jsonify, request
 
 app = Flask(__name__)
 
 
-@app.route('/detectcnic', methods=["POST"])
+@app.route('/v2/detectcnic', methods=["POST"])
 def detectCNIC():
     frame = request.form["image"]
 
-    temp = check_reality(frame).returnLabel()
+    temp = CheckReality(frame)
 
     if (temp):
         return "", 200
