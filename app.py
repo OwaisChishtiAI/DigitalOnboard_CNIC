@@ -1,5 +1,5 @@
-from cnic_reality import CheckReality
 from flask import Flask, Response, jsonify, request
+from cnic_reality import CheckReality
 
 app = Flask(__name__)
 
