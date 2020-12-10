@@ -1,8 +1,11 @@
 import os
+import io
+import base64
 import imutils
 import logging
 import tensorflow
 import numpy as np
+from PIL import Image
 import matplotlib.pyplot as plt
 from tensorflow.keras.preprocessing import image
 
@@ -15,16 +18,16 @@ def _base64_to_image(base_string):
     base_string = base64.b64decode(base_string)
     base_string = io.BytesIO(base_string)
     base_string = Image.open(base_string)
+    base_string = base_string.resize((128, 128))
     base_string = np.array(base_string)
     base_string = base_string[:, :, ::-1].copy()
 
     return base_string
 
 
-def check_reality(img):
+def CheckReality(img):
     img = _base64_to_image(img)
-    # img = image.load_img(img + i, target_size=(128, 128))
-    img = imutils.resize(img, width=128)
+    # img = image.load_img(img, target_size=(128, 128))
     img = image.img_to_array(img)
     img = img / 255.0
 
