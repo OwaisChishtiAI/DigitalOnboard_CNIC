@@ -8,6 +8,7 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 from tensorflow.keras.preprocessing import image
+from tensorflow.keras.preprocessing import image
 
 model = os.getcwd() + "/model.h5"
 
@@ -19,20 +20,15 @@ def _base64_to_image(base_string):
     base_string = io.BytesIO(base_string)
     base_string = Image.open(base_string)
     base_string = base_string.resize((128, 128))
-    base_string = np.array(base_string)
-    base_string = base_string[:, :, ::-1].copy()
-
-    return base_string
-
-
-def CheckReality(img):
-    img = _base64_to_image(img)
-    # img = image.load_img(img, target_size=(128, 128))
-    img = image.img_to_array(img)
-    img = img / 255.0
-
+    img = image.img_to_array(base_string)
+    img = img / 255
     img = np.expand_dims(img, axis=0)
 
+    return img
+
+
+def check_reality(img):
+    img = _base64_to_image(img)
     prediction = classifier.predict(img, batch_size=None, steps=1)
 
     if (prediction[:, :] > 0.5):
